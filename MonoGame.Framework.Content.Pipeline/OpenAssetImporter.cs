@@ -379,6 +379,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
                 if (aiMaterial.HasTextureHeight)
                     material.Textures.Add("Bump", ImportTextureContentRef(aiMaterial.TextureHeight));
 
+                if (aiMaterial.HasTextureNormal)
+                    material.Textures.Add("Normal", ImportTextureContentRef(aiMaterial.TextureNormal));
+
                 if (aiMaterial.HasColorDiffuse)
                     material.DiffuseColor = new Vector3(aiMaterial.ColorDiffuse.X, aiMaterial.ColorDiffuse.Y, aiMaterial.ColorDiffuse.Z);
 
