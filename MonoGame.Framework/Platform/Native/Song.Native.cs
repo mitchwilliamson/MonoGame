@@ -46,7 +46,7 @@ public sealed partial class Song : IEquatable<Song>, IDisposable
 
             uint size;
             byte* buffer;
-            finished = MGM.AudioDecoder_Decode(_decoder, &buffer, &size) == 0 ? false : true;
+            finished = MGM.AudioDecoder_Decode(_decoder, out buffer, out size) == 0 ? false : true;
 
             if (size > 0)
             {
@@ -75,10 +75,7 @@ public sealed partial class Song : IEquatable<Song>, IDisposable
     private unsafe void PlatformInitialize(string fileName)
     {
         var absolutePath = MGP.Platform_MakePath(TitleContainer.Location, fileName);
-
-        fixed (byte* p = System.Text.Encoding.UTF8.GetBytes(absolutePath + '\0'))
-        fixed (MGM_AudioDecoderInfo* i = &_info)
-            _decoder = MGM.AudioDecoder_Create(p, i);
+        _decoder = MGM.AudioDecoder_Create(absolutePath, out _info);
 
         if (_decoder == null)
             return;

@@ -21,9 +21,7 @@ internal partial class EffectResource
     {
         byte* data;
         int size;
-        fixed (byte* n = System.Text.Encoding.UTF8.GetBytes(name + '\0'))
-            MGG.EffectResource_GetBytecode(n, &data, &size);
-
+        MGG.EffectResource_GetBytecode(name, out data, out size);
         var bytecode = new byte[size];
         Marshal.Copy((IntPtr)data, bytecode, 0, size);
         return bytecode;
